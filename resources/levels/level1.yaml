@@ -11,6 +11,68 @@ ai_tank:
 projectile:
    speed: 1000
    damage: 10	
+path_nodes:
+   - type: path
+     position: {x: 400, y: 700}
+     rotation: 310
+   - type: path
+     position: {x: 550, y: 550}
+     rotation: 310
+   - type: path
+     position: {x: 700, y: 400}
+     rotation: 310
+   - type: path
+     position: {x: 850, y: 250}
+     rotation: 310
+   - type: path
+     position: {x: 1000, y: 250}
+     rotation: 45
+   - type: path
+     position: {x: 1150, y: 400}
+     rotation: 45
+   - type: path
+     position: {x: 1250, y: 500}
+     rotation: 45
+   - type: path
+     position: {x: 1250, y: 600}
+     rotation: 90
+   - type: path
+     position: {x: 1200, y: 700}
+     rotation: 135 
+   - type: path
+     position: {x: 1050, y: 725}
+     rotation: 0
+   - type: path
+     position: {x: 900, y: 725}
+     rotation: 0
+   - type: path
+     position: {x: 750, y: 600}
+     rotation: 45
+   - type: path
+     position: {x: 550, y: 400}
+     rotation: 45
+   - type: path
+     position: {x: 500, y: 250}
+     rotation: 90
+   - type: path
+     position: {x: 400, y: 75}  
+     rotation: 0
+   - type: path
+     position: {x: 200, y: 150}
+     rotation: 135
+   - type: path
+     position: {x: 100, y: 250}
+     rotation: 90
+   - type: path
+     position: {x: 100, y: 400}
+     rotation: 90
+   - type: path
+     position: {x: 150, y: 500}
+     rotation: 45
+   - type: path
+     position: {x: 275, y: 625}
+     rotation: 45
+
 obstacles: 
    - type: wall
      position: {x: 100, y: 660}

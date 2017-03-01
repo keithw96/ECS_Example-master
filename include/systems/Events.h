@@ -11,7 +11,18 @@ struct EvStartGame : public entityx::Event<EvStartGame>
 {
 	EvStartGame() {}
 };
+/// <summary>
+/// An event used to determine the playerId.
+/// </summary>
+struct EvReportPlayerId : public entityx::Event<EvReportPlayerId>
+{
+	EvReportPlayerId(entityx::Entity::Id playerId)
+		: m_playerId(playerId)
+	{
+	}
 
+	entityx::Entity::Id m_playerId;
+};
 
 /// <summary>
 /// The game initialise event.
@@ -32,6 +43,17 @@ struct EvInit : public entityx::Event<EvInit>
 
 	int m_levelNr;
 	LevelData const& m_level;
+};
+
+struct ReturnPath : public entityx::Event<ReturnPath>
+{
+	ReturnPath(int node)
+		:
+		m_node(node)
+	{
+		
+	}
+	int m_node;
 };
 
 struct EvKeyboard : public entityx::Event<EvKeyboard>

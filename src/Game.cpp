@@ -3,6 +3,8 @@
 
 #include "Game.h"
 #include "systems\PlayerControlSystem.h"
+#include "systems\AiControlSystem.h"
+
 
 KeyHandler m_keyHandler;
 
@@ -115,6 +117,7 @@ void Game::update()
 	{		
 		m_systemManager.update<MovementSystem>(MS_PER_UPDATE);	
 		m_systemManager.update<PlayerControlSystem>(MS_PER_UPDATE);
+		m_systemManager.update<AiControlSystem>(MS_PER_UPDATE);
 	}
 }
 
@@ -126,6 +129,7 @@ void Game::update()
 void Game::render(double ms)
 {
 	m_systemManager.update<RenderSystem>(0.0);
+	m_systemManager.update<HUDSystem>(MS_PER_UPDATE);
 	m_window.display();
 }
 
@@ -138,10 +142,13 @@ void Game::createSystems()
 	spTexture->loadFromFile(resourcePath() + "images/SpriteSheet.png");
 	spTexture->setSmooth(true);
 
+	
 	m_systemManager.add<LevelSystem>(m_entityManager, m_eventManager);
 	m_systemManager.add<RenderSystem>(m_window, spTexture);	
 	m_systemManager.add<MovementSystem>();	
 	m_systemManager.add<PlayerControlSystem>(m_keyHandler);
+	m_systemManager.add<AiControlSystem>();
+	m_systemManager.add<HUDSystem>(m_window);
 	m_systemManager.configure();
 }
 

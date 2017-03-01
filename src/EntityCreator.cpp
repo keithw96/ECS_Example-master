@@ -1,6 +1,45 @@
 #include "EntityCreator.h"
 #include "systems\PlayerControlSystem.h"
 
+WallCreator::WallCreator(std::string type,
+					   	 sf::Vector2f position,
+						 double rotation)
+	: m_type(type)
+	, m_position(position)
+	, m_rotation(rotation)
+{
+}
+
+void WallCreator::create(entityx::Entity& entity)
+{
+	auto volume = Volume();
+	volume.m_box = CollisionBox(33, 23);
+
+	entity.assign<Volume>(volume);
+	entity.assign<Display>(sf::IntRect(2, 129, 33, 23));
+	entity.assign<Position>(m_position, m_rotation);
+	entity.assign<Wall>();
+}
+
+PathNodeCreator::PathNodeCreator(std::string type, sf::Vector2f position, double rotation)
+	: m_position(position),
+	  m_rotation(rotation),
+	  m_type(type)
+{
+
+}
+
+void PathNodeCreator::create(entityx::Entity& entity)
+{
+	auto volume = Volume();
+	volume.m_box = CollisionBox(33, 23);
+
+	entity.assign<Volume>(volume);
+	entity.assign<Display>(sf::IntRect(2, 129, 33, 23));
+	entity.assign<Position>(m_position, m_rotation);
+	entity.assign<Path>();
+}
+
 BackgroundCreator::BackgroundCreator(const std::string& fileName)
 	: m_fileName(fileName)
 {
@@ -28,7 +67,9 @@ void TankBaseCreator::create(entityx::Entity& entity)
 	entity.assign<Volume>(volume);		
 	if (m_isAi)
 	{
-		// TODO: Assign relevant components for AI
+		// Add these...
+		entity.assign<Display>(sf::IntRect(103, 43, 79, 43));
+		entity.assign<Ai>(TankAi::AiType::AI_ID_SEEK_SHOOT_AT_PLAYER, entity.id());
 	}
 	else
 	{
@@ -61,7 +102,9 @@ void TurretCreator::create(entityx::Entity& entity)
 	// http://gamedev.stackexchange.com/questions/31888/in-an-entity-component-system-engine-how-do-i-deal-with-groups-of-dependent-ent
 	if (m_isAi)
 	{
-		// TODO: Assign relevant components for AI
+		// Add these...
+		entity.assign<Display>(sf::IntRect(122, 1, 83, 31));
+		entity.assign<Ai>(TankAi::AiType::AI_ID_SEEK_SHOOT_AT_PLAYER, entity.id());
 	}
 	else
 	{

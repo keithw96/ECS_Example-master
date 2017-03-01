@@ -12,8 +12,10 @@
 #include "systems/LevelSystem.h"
 #include "systems/RenderSystem.h"
 #include "systems/MovementSystem.h"
+#include "systems\PlayerControlSystem.h"
+#include "HUDSystem.h"
 
-
+#include "components\PlayerControl.h"
 /// <summary>
 /// @Author Ross Palmer
 /// @Version 1.0

@@ -8,6 +8,14 @@ void operator >> (const YAML::Node& obstacleNode, ObstacleData& obstacle)
    obstacle.m_rotation = obstacleNode["rotation"].as<double>();
 }
 
+void operator >> (const YAML::Node& pathNode, PathNodeData& path)
+{
+	path.m_type = pathNode["type"].as<std::string>();
+	path.m_position.x = pathNode["position"]["x"].as<float>();
+	path.m_position.y = pathNode["position"]["y"].as<float>();
+	path.m_rotation = pathNode["rotation"].as<double>();
+}
+
 void operator >> (const YAML::Node& backgroundNode, BackgroundData& background)
 {
    background.m_fileName = backgroundNode["file"].as<std::string>();
@@ -38,11 +46,20 @@ void operator >> (const YAML::Node& levelNode, LevelData& level)
    levelNode["projectile"] >> level.m_projectile;
 
    const YAML::Node& obstaclesNode = levelNode["obstacles"].as<YAML::Node>();
+   const YAML::Node& pathNode = levelNode["path_nodes"].as<YAML::Node>();
+
    for (unsigned i = 0; i < obstaclesNode.size(); ++i)
    {
-	  ObstacleData obstacle;
-	  obstaclesNode[i] >> obstacle;
-	  level.m_obstacles.push_back(obstacle);
+	   ObstacleData obstacle;
+	   obstaclesNode[i] >> obstacle;
+	   level.m_obstacles.push_back(obstacle);
+   }
+
+   for (unsigned i = 0; i < pathNode.size(); i++)
+   {
+	   PathNodeData path;
+	   pathNode[i] >> path;
+	   level.m_pathNodes.push_back(path);
    }
 }
 
@@ -78,6 +95,5 @@ bool LevelLoader::load(int nr, LevelData& level)
 	   std::cout << e.what() << "\n";
 	   return false;
    }
-
    return true;
 }
