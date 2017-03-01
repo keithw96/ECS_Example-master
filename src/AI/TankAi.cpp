@@ -2,6 +2,12 @@
 
 int m_currentNode;
 
+/// <summary>
+/// tank ai initialiser 
+/// </summary>
+/// <param name="obstacles"></param>
+/// <param name="pathNodes"></param>
+/// <param name="id"></param>
 TankAi::TankAi(std::vector<sf::CircleShape> const & obstacles, std::vector<sf::CircleShape> const & pathNodes,  entityx::Entity::Id id)
 	: m_aiBehaviour(AiBehaviour::FOLLOW_PATH)
 	, m_steering(0, 0)
@@ -12,6 +18,14 @@ TankAi::TankAi(std::vector<sf::CircleShape> const & obstacles, std::vector<sf::C
 	m_currentNode = 0;
 }
 
+/// <summary>
+/// updates the tanks behaviours and positon 
+/// </summary>
+/// <param name="playerId"></param>
+/// <param name="aiId"></param>
+/// <param name="entities"></param>
+/// <param name="events"></param>
+/// <param name="dt"></param>
 void TankAi::update(entityx::Entity::Id playerId,
 	entityx::Entity::Id aiId,
 	entityx::EntityManager& entities,
@@ -87,6 +101,13 @@ void TankAi::update(entityx::Entity::Id playerId,
 	}
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="playerId"></param>
+/// <param name="aiId"></param>
+/// <param name="entities"></param>
+/// <returns></returns>
 sf::Vector2f TankAi::seek(entityx::Entity::Id playerId,
 						  entityx::Entity::Id aiId,
 	                      entityx::EntityManager& entities) const
@@ -127,18 +148,27 @@ sf::Vector2f TankAi::seekPath(entityx::Entity::Id aiId,
 		}
 		//std::cout << std::to_string(m_currentNode) << std::endl;
 	}
-
-	
-
 	return pos;
 }
 
+/// <summary>
+/// finds and returns the distance between the passed node and the tank
+/// </summary>
+/// <param name="tankPos"></param>
+/// <param name="nodePos"></param>
+/// <returns></returns>
 float TankAi::distance(sf::Vector2f tankPos,
 		sf::Vector2f nodePos) const
 {
 	return sqrt((tankPos.x - nodePos.x) * (tankPos.x - nodePos.x) + (tankPos.y - nodePos.y) * (tankPos.y - nodePos.y));
 }
 
+/// <summary>
+/// calculates the required avoidance to rotate away from an obstacle
+/// </summary>
+/// <param name="aiId"></param>
+/// <param name="entities"></param>
+/// <returns></returns>
 sf::Vector2f TankAi::collisionAvoidance(entityx::Entity::Id aiId, 
 									    entityx::EntityManager& entities)
 {
@@ -167,6 +197,12 @@ sf::Vector2f TankAi::collisionAvoidance(entityx::Entity::Id aiId,
     return avoidance;
 }
 
+/// <summary>
+/// if the unrendered line infront of the tank intersects an obstacle, it returns the obstacle
+/// </summary>
+/// <param name="aiId"></param>
+/// <param name="entities"></param>
+/// <returns></returns>
 const sf::CircleShape TankAi::findMostThreateningObstacle(entityx::Entity::Id aiId,
 																     entityx::EntityManager& entities) 
 {

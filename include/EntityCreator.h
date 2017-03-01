@@ -17,8 +17,6 @@
 #include "PathNode.h"
 #include "components/AI.h"
 #include "ai/TankAI.h"
-//#include "systems/AiControlSystem.h"
-
 class WallCreator : public ICreatable
 {
 public:

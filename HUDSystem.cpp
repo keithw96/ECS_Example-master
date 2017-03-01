@@ -1,5 +1,10 @@
 #include "HUDSystem.h"
 
+/// <summary>
+/// initiliaser
+/// initialise fonts and texts
+/// </summary>
+/// <param name="window"></param>
 HUDSystem::HUDSystem(sf::RenderWindow& window) : m_window(window)
 {
 	m_stringNode = "current node = 0";
@@ -10,15 +15,19 @@ HUDSystem::HUDSystem(sf::RenderWindow& window) : m_window(window)
 		std::cout << "cant load font file" << std::endl;
 	}
 
-	//m_textNode.setString(m_stringNode);
 	m_textNode.setPosition(100, 100);
 	m_textNode.setFont(m_font);
 
-	//m_textTime.setString(m_stringTime);
 	m_textTime.setPosition(100, 200);
 	m_textTime.setFont(m_font);
 }
 
+/// <summary>
+/// updates the time and current node strings and draws them
+/// </summary>
+/// <param name="entities"></param>
+/// <param name="events"></param>
+/// <param name="dt"></param>
 void HUDSystem::update(entityx::EntityManager& entities,
 					   entityx::EventManager& events, 
 					   double dt)
@@ -26,7 +35,6 @@ void HUDSystem::update(entityx::EntityManager& entities,
 	m_currentTime += dt/160;
 
 	m_stringTime = "Time: " + std::to_string(m_currentTime);
-	//m_stringNode = m_stringTime + std::to_string(m_currentNode);
 
 	m_textTime.setString(m_stringTime);
 	m_textNode.setString(m_stringNode);
@@ -36,6 +44,10 @@ void HUDSystem::update(entityx::EntityManager& entities,
 
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="events"></param>
 void HUDSystem::configure(entityx::EventManager& events)
 {
 	events.subscribe<ReturnPath>(*this);
@@ -44,8 +56,11 @@ void HUDSystem::configure(entityx::EventManager& events)
 
 void HUDSystem::receive(const ReturnPath& node)
 {
+	//recieves the current node from the Tankai class
 	m_currentNode = node.m_node;
 	m_stringNode = "current node = " + std::to_string(m_currentNode);
+
+	//resets time and outputs the lap time
 	if (m_currentNode == 0)
 	{
 		std::cout << "  Lap: " << m_currentTime << std::endl;
